@@ -47,26 +47,30 @@ def disable_windows_defender():
         
         print("[Regedit] Windows Defender disabled.")
     except Exception as e:
-        print(f"[Rgedit] An error occurred while disabling Windows Defender: {str(e)}")
+        print(f"[Regedit] An error occurred while disabling Windows Defender: {str(e)}")
 
     
 def disable_telemetry():
-    os.system('sc stop DiagTrack')
-    os.system('sc config DiagTrack start=disabled')
-    
-    key_path = r"SOFTWARE\Policies\Microsoft\Windows\DataCollection"
-    value_name = "AllowTelemetry"
-    value_data = 0
+    try:
+        os.system('sc stop DiagTrack')
+        os.system('sc config DiagTrack start=disabled')
+    except Exception as e:
+        print(f"[Service] An error occurred while disabling Telemetry: {str(e)}")
 
     try:
+        key_path = r"SOFTWARE\Policies\Microsoft\Windows\DataCollection"
+        value_name = "AllowTelemetry"
+        value_data = 0
+
         key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, key_path, 0, winreg.KEY_WRITE)
 
         winreg.SetValueEx(key, value_name, 0, winreg.REG_DWORD, value_data)
 
         winreg.CloseKey(key)
-        print("Telemetry has been deactivated correctly.")
+        
+        print("[Regedit] Telemetry has been deactivated correctly.")
     except FileNotFoundError:
-        print("The registry key does not exist. Make sure you have the correct version of Windows installed.")
+        print("[Regedit] An error occurred while disabling Telemetry: The registry key does not exist. Make sure you have the correct version of Windows installed.")
 
 
 def disable_transparency():
