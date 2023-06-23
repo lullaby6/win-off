@@ -82,6 +82,28 @@ def disable_visual_effects():
 def clear_temp_files():
     os.system('cd %TEMP% && del /F /Q *.*')
     os.system('cd %SystemRoot%\Temp && del /F /Q *.*')
+    
+def set_high_performance_power_plan():
+    result = subprocess.run(['powercfg', '-list'], capture_output=True, text=True)
+    output = result.stdout
+
+    if 'Alto rendimiento' in output:
+        start_index = output.index('Alto rendimiento')
+        end_index = output.index('\n', start_index)
+        plan_line = output[start_index:end_index]
+        plan_guid = plan_line.split()[3]
+        subprocess.run(['powercfg', '-setactive', plan_guid], check=True)
+        print("The 'Alto rendimiento' power plan has been activated.")
+    elif 'High performance' in output:
+        start_index = output.index('High performance')
+        end_index = output.index('\n', start_index)
+        plan_line = output[start_index:end_index]
+        plan_guid = plan_line.split()[3]
+
+        subprocess.run(['powercfg', '-setactive', plan_guid], check=True)
+        print("The 'High performance' power plan has been activated.")
+    else:
+        print("The 'High performance' power plan was not found.")
 
 menu = {
     'Disable SysMain/SuperFetch': disable_sysmain,
@@ -90,6 +112,7 @@ menu = {
     'Disable Transparency': disable_transparency,
     'Disable Visual Effects': disable_visual_effects,
     'Disable Windows Defender': disable_windows_defender,
+    'Set High Performance Power Plan': set_high_performance_power_plan,
     'Clear Temp Files': clear_temp_files,
     'Exit': lambda: sys.exit()
 }
