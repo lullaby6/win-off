@@ -78,6 +78,10 @@ def disable_transparency():
 
 def disable_visual_effects():
     os.system('reg add HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects /v VisualFXSetting /t REG_DWORD /d 2 /f')
+    
+def clear_temp_files():
+    os.system('cd %TEMP% && del /F /Q *.*')
+    os.system('cd %SystemRoot%\Temp && del /F /Q *.*')
 
 menu = {
     'Disable SysMain/SuperFetch': disable_sysmain,
@@ -86,6 +90,7 @@ menu = {
     'Disable Transparency': disable_transparency,
     'Disable Visual Effects': disable_visual_effects,
     'Disable Windows Defender': disable_windows_defender,
+    'Clear Temp Files': clear_temp_files,
     'Exit': lambda: sys.exit()
 }
 
@@ -102,4 +107,4 @@ while True:
     if selected_option.isdigit() and int(selected_option) > 0 and int(selected_option) <= len(menu_keys):
         key_selected = menu_keys[int(selected_option)-1]
         menu[key_selected]()
-        input()
+        input('\n>>> Press ENTER to continue')
