@@ -76,11 +76,15 @@ def disable_telemetry():
 def disable_transparency():
     os.system('reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize /v EnableTransparency /t REG_DWORD /d 0 /f')
 
+def disable_visual_effects():
+    os.system('reg add HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects /v VisualFXSetting /t REG_DWORD /d 2 /f')
+
 menu = {
     'Disable SysMain/SuperFetch': disable_sysmain,
     'Disable WPN Service': disable_wpnservice,
     'Disable Telemetry': disable_telemetry,
     'Disable Transparency': disable_transparency,
+    'Disable Visual Effects': disable_visual_effects,
     'Disable Windows Defender': disable_windows_defender,
     'Exit': lambda: sys.exit()
 }
