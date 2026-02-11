@@ -1,6 +1,6 @@
-# Win Off
+# WinOff
 
-Disable windows feactures and more utilities
+Disable windows feactures and more utilities.
 
 ## Run
 
