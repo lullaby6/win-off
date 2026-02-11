@@ -12,4 +12,4 @@ python main.pyw
 
 ## Download
 
-[Click here to download](https://github.com/lullaby6/Desktop-Emojis/releases/download/v1.0/Desktop-Emojis.zip) (.exe)
+[Click here to download](https://github.com/lullaby6/win-off/releases/download/v1.0.0/WinOff.exe) (.exe)
